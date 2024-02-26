@@ -1,0 +1,26 @@
+{
+    "name": "gatewaypay/gateway-php-sdk",
+    "keywords": ["php","gateway-php-sdk"],
+    "description": "COPYandPAY is a SAQ-A compliant payment-form solution, making it both secure and simple-to-integrate.",
+    "require": {
+        "php": ">=7.4"
+    },
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "GatewayPay\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yogesh Vakhre",
+            "email": "support@gateway.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5.10"
+    }
+}
