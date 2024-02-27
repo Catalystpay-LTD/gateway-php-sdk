@@ -235,9 +235,7 @@ try {
     if (isset(($_GET['id']))) {
         $checkoutId = $_GET['id'];
         $responseData = $GatewayPaySDK->getRegistrationStatus($checkoutId);
-        print_r($responseData->getApiResponse()); // Get payment Registration status response 
-        var_dump($responseData->isRegistrationStatus()); // Check  payment Registration status value True or False
-
+        
         // Check IF payment registration status is success 
         if ($responseData->isRegistrationStatus()) {
             $paymentId = $responseData->getId(); // get the payment id
