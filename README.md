@@ -1,10 +1,10 @@
-# GatewayPay SDK for PHP
+# Catalyst Pay SDK for PHP
 
-#This is a PHP SDK for integrating with the GatewayPay API to handle payment processing.
+#This is a PHP SDK for integrating with the Catalyst Pay API to handle payment processing.
 
 ## Installation
 
-`composer require gatewaypay/gateway-php-sdk`
+`composer require catalystpay/gateway-php-sdk`
 
 ## Catalyst Pay Integration Guide
 ### 1) Go to root project and you can use this GatewayPaySDK class in your PHP code as follows

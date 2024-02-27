@@ -1,5 +1,5 @@
 {
-    "name": "gatewaypay/gateway-php-sdk",
+    "name": "catalystpay/gateway-php-sdk",
     "keywords": ["php","gateway-php-sdk"],
     "description": "COPYandPAY is a SAQ-A compliant payment-form solution, making it both secure and simple-to-integrate.",
     "require": {
