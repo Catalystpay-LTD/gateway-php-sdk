@@ -7,20 +7,20 @@
 `composer require catalystpay/gateway-php-sdk`
 
 ## Catalyst Pay Integration Guide
-### 1) Go to root project and you can use this GatewayPaySDK class in your PHP code as follows
+### 1) Go to root project and you can use this CatalystPaySDK class in your PHP code as follows
 
 ```php
 
 require_once 'vendor/autoload.php';
 
-use GatewayPay\GatewayPayResponseCode;
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPayResponseCode;
+use CatalystPay\CatalystPaySDK;
 try {
-    // Configured  GatewayPaySDK
+    // Configured  CatalystPaySDK
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
@@ -30,7 +30,7 @@ try {
     $data = [
         'amount' => 92.00,
         'currency' => 'EUR',
-        'paymentType' => GatewayPaySDK::PAYMENT_TYPE_DEBIT,
+        'paymentType' => CatalystPaySDK::PAYMENT_TYPE_DEBIT,
         'billing.city' => 'surat',
         'billing.country' => 'DE',
         'billing.street1' => 'test',
@@ -42,11 +42,11 @@ try {
     ];
 
     //Prepare Check out form 
-    $responseData = $GatewayPaySDK->prepareCheckout($data);
+    $responseData = $CatalystPaySDK->prepareCheckout($data);
     // Check if isPrepareCheckoutSuccess is true
     if ($responseData->isCheckoutSuccess()) {
         //Show checkout success
-        $infoMessage = 'The checkout returned ' . $responseData->getResultCode() . ' instead of ' . GatewayPayResponseCode::CREATED_CHECKOUT;
+        $infoMessage = 'The checkout returned ' . $responseData->getResultCode() . ' instead of ' . CatalystPayResponseCode::CREATED_CHECKOUT;
             $wpwlOptions = "{
                 iframeStyles: {
                     'card-number-placeholder': {
@@ -65,33 +65,33 @@ try {
        // Payment with card
         $formData = [
             'checkoutId' => $responseData->getId(),
-            'shopperResultUrl' => 'http://localhost/GatewayPay-php-sdk/copy_and_pay_result.php',
+            'shopperResultUrl' => 'http://localhost/CatalystPay-php-sdk/copy_and_pay_result.php',
             'dataBrands' => [
-                GatewayPaySDK::PAYMENT_BRAND_VISA,
-                GatewayPaySDK::PAYMENT_BRAND_MASTERCARD,
-                GatewayPaySDK::PAYMENT_BRAND_AMEX
+                CatalystPaySDK::PAYMENT_BRAND_VISA,
+                CatalystPaySDK::PAYMENT_BRAND_MASTERCARD,
+                CatalystPaySDK::PAYMENT_BRAND_AMEX
                 ],
             'wpwlOptions' => $wpwlOptions
         ];
-        echo $GatewayPaySDK->createPaymentForm($formData);
+        echo $CatalystPaySDK->createPaymentForm($formData);
 
         // Payment with google pay
         $formData2 = [
             'checkoutId' => $responseData->getId(),
-            'shopperResultUrl' => 'http://localhost/GatewayPay-php-sdk/copy_and_pay_result.php',
-            'dataBrands' => [GatewayPaySDK::PAYMENT_BRAND_GOOGLE_PAY],
+            'shopperResultUrl' => 'http://localhost/CatalystPay-php-sdk/copy_and_pay_result.php',
+            'dataBrands' => [CatalystPaySDK::PAYMENT_BRAND_GOOGLE_PAY],
             'wpwlOptions' => $wpwlOptions
         ];
-        echo $GatewayPaySDK->createPaymentForm($formData2);
+        echo $CatalystPaySDK->createPaymentForm($formData2);
 
         // Payment with rocket fuel
         $formData4 = [
             'checkoutId' => $responseData->getId(),
-            'shopperResultUrl' => 'http://localhost/GatewayPay-php-sdk/copy_and_pay_result.php',
-            'dataBrands' => [GatewayPaySDK::PAYMENT_BRAND_ROCKET_FUEL],
+            'shopperResultUrl' => 'http://localhost/CatalystPay-php-sdk/copy_and_pay_result.php',
+            'dataBrands' => [CatalystPaySDK::PAYMENT_BRAND_ROCKET_FUEL],
             'wpwlOptions' => $wpwlOptions
         ];
-        echo $GatewayPaySDK->createPaymentForm($formData4);
+        echo $CatalystPaySDK->createPaymentForm($formData4);
     } else {
         echo "The Prepare Checkout was not successful";
     }
@@ -100,19 +100,19 @@ try {
 }
 ```
 
-### 2) Go to root project and you can use this GatewayPaySDK class to get payment status in your PHP code as follows
+### 2) Go to root project and you can use this CatalystPaySDK class to get payment status in your PHP code as follows
 
 ```php
 
 require_once 'vendor/autoload.php';
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPaySDK;
 
 try {
 
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
@@ -121,7 +121,7 @@ try {
     // Handle the payment status as needed
     if (isset(($_GET['id']))) {
         $checkoutId = $_GET['id'];
-        $responseData = $GatewayPaySDK->getPaymentStatus($checkoutId);
+        $responseData = $CatalystPaySDK->getPaymentStatus($checkoutId);
         print_r($responseData->getApiResponse()); // Get payment status response 
         var_dump($responseData->isPaymentStatus()); // Check  payment status value True or False
 
@@ -144,20 +144,20 @@ try {
 
 ## Gateway Pay Registration Tokens
 
-### 1) Go to root project and you can use this GatewayPaySDK class for Prepare the checkout and create the registration form in your PHP code as follows
+### 1) Go to root project and you can use this CatalystPaySDK class for Prepare the checkout and create the registration form in your PHP code as follows
 
 ```php
 require_once 'vendor/autoload.php';
-use GatewayPay\GatewayPayResponseCode;
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPayResponseCode;
+use CatalystPay\CatalystPaySDK;
 
 try {
-    // Configured  GatewayPaySDK
+    // Configured  CatalystPaySDK
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
     $isCreateRegistration = 'true';
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
@@ -165,18 +165,18 @@ try {
 
     // Form Values defined variable
     $data = [
-        'testMode' => GatewayPaySDK::TEST_MODE_EXTERNAL,
+        'testMode' => CatalystPaySDK::TEST_MODE_EXTERNAL,
         'createRegistration' => $isCreateRegistration
     ];
     //Prepare Check out form 
-    $responseData = $GatewayPaySDK->prepareRegisterCheckout($data);
+    $responseData = $CatalystPaySDK->prepareRegisterCheckout($data);
 
     //  print_r($responseData);
     // var_dump($responseData->isCheckoutSuccess());
     // Check if checkout success is true
     if ($responseData->isCheckoutSuccess()) {
         //Show checkout success
-        $infoMessage = 'The checkout returned ' . $responseData->getResultCode() . ' instead of ' . GatewayPayResponseCode::CREATED_CHECKOUT;
+        $infoMessage = 'The checkout returned ' . $responseData->getResultCode() . ' instead of ' . CatalystPayResponseCode::CREATED_CHECKOUT;
 
         $wpwlOptions = "{
             iframeStyles: {
@@ -196,16 +196,16 @@ try {
         // Payment with card
         $formData = [
             'checkoutId' => $responseData->getId(),
-            'shopperResultUrl' => 'http://localhost/GatewayPay-php-sdk/registration_token_payment.php',
+            'shopperResultUrl' => 'http://localhost/CatalystPay-php-sdk/registration_token_payment.php',
             'dataBrands' => [
-                GatewayPaySDK::PAYMENT_BRAND_VISA ,
-                GatewayPaySDK::PAYMENT_BRAND_MASTERCARD,
-                GatewayPaySDK::PAYMENT_BRAND_AMEX
+                CatalystPaySDK::PAYMENT_BRAND_VISA ,
+                CatalystPaySDK::PAYMENT_BRAND_MASTERCARD,
+                CatalystPaySDK::PAYMENT_BRAND_AMEX
                 ],
             'wpwlOptions' => $wpwlOptions
         ];
 
-        echo $GatewayPaySDK->getCreateRegistrationPaymentForm($formData);       
+        echo $CatalystPaySDK->getCreateRegistrationPaymentForm($formData);       
     } else {
         echo "The Prepare Checkout was not successful";
     }
@@ -215,7 +215,7 @@ try {
 ```
 
 
-### 2) Go to root project and you can use this GatewayPaySDK class to get the registration status and Send payment using the token in your PHP code as follows
+### 2) Go to root project and you can use this CatalystPaySDK class to get the registration status and Send payment using the token in your PHP code as follows
 
 ```php
 // Example usage
@@ -225,7 +225,7 @@ try {
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
@@ -234,7 +234,7 @@ try {
     // Handle the payment Registration status as needed
     if (isset(($_GET['id']))) {
         $checkoutId = $_GET['id'];
-        $responseData = $GatewayPaySDK->getRegistrationStatus($checkoutId);
+        $responseData = $CatalystPaySDK->getRegistrationStatus($checkoutId);
         
         // Check IF payment registration status is success 
         if ($responseData->isRegistrationStatus()) {
@@ -242,18 +242,18 @@ try {
 
             // Form Values defined variable
             $data = [
-                'paymentBrand' => GatewayPaySDK::PAYMENT_BRAND_VISA,
-                'paymentType' =>  GatewayPaySDK::PAYMENT_TYPE_DEBIT,
+                'paymentBrand' => CatalystPaySDK::PAYMENT_BRAND_VISA,
+                'paymentType' =>  CatalystPaySDK::PAYMENT_TYPE_DEBIT,
                 'amount' => 92.00,
                 'currency' => 'EUR',
-                'standingInstructionType' =>  GatewayPaySDK::STANDING_INSTRUCTION_TYPE_UNSCHEDULED,
-                'standingInstructionMode' =>  GatewayPaySDK::STANDING_INSTRUCTION_MODE_INITIAL,
-                'standingInstructionSource' => GatewayPaySDK::STANDING_INSTRUCTION_SOURCE_CIT,
-                'testMode' => GatewayPaySDK::TEST_MODE_EXTERNAL
+                'standingInstructionType' =>  CatalystPaySDK::STANDING_INSTRUCTION_TYPE_UNSCHEDULED,
+                'standingInstructionMode' =>  CatalystPaySDK::STANDING_INSTRUCTION_MODE_INITIAL,
+                'standingInstructionSource' => CatalystPaySDK::STANDING_INSTRUCTION_SOURCE_CIT,
+                'testMode' => CatalystPaySDK::TEST_MODE_EXTERNAL
             ];
 
             // Send payment using the token
-            $registerPayment = $GatewayPaySDK->sendRegistrationTokenPayment($paymentId, $data);
+            $registerPayment = $CatalystPaySDK->sendRegistrationTokenPayment($paymentId, $data);
 
             //check if payment Successful true
             $isPaymentSuccessful =  $registerPayment->isSuccessful();
@@ -274,75 +274,75 @@ try {
 
 ## Transaction Reports
 
-### 1) Go to root project and you can use this GatewayPaySDK class for transaction reports allow to retrieve detailed transactional data from the platform in your PHP code as follows
+### 1) Go to root project and you can use this CatalystPaySDK class for transaction reports allow to retrieve detailed transactional data from the platform in your PHP code as follows
 
 ```php
 require_once 'vendor/autoload.php';
 
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPaySDK;
 
 // Example usage
 try {
 
-    // Configured  GatewayPaySDK
+    // Configured  CatalystPaySDK
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
     );
 
     // Get Transaction by id
-    $responseData = $GatewayPaySDK->getTransactionById(['id' => '8ac7a4a1845f7e19018461a00b366a74', 'includeLinkedTransactions' => 'true', 'paymentTypes' => 'DB,3D','paymentMethods' => 'CC,DC']);
+    $responseData = $CatalystPaySDK->getTransactionById(['id' => '8ac7a4a1845f7e19018461a00b366a74', 'includeLinkedTransactions' => 'true', 'paymentTypes' => 'DB,3D','paymentMethods' => 'CC,DC']);
     print_r($responseData->getApiResponse()); // Get Transaction response 
 
        // Get Transaction by merchant ID 
-    $transactionMerchant = $GatewayPaySDK->getMerchantTransactionById('test123');
+    $transactionMerchant = $CatalystPaySDK->getMerchantTransactionById('test123');
     print_r($transactionMerchant->getApiResponse());
 
     // Get transactions for a specified time frame
-    $transactionSpecifiedTimeFrame = $GatewayPaySDK->getTransactionByDateFilter(['dateFrom' => '2023-01-01 00:00:00', 'dateTo' => '2023-01-01 01:00:00','merchantTransactionId' => 'test123', 'paymentTypes' => 'DB,3D', 'paymentMethods' => 'CC,DC', 'limit' => 20]);
+    $transactionSpecifiedTimeFrame = $CatalystPaySDK->getTransactionByDateFilter(['dateFrom' => '2023-01-01 00:00:00', 'dateTo' => '2023-01-01 01:00:00','merchantTransactionId' => 'test123', 'paymentTypes' => 'DB,3D', 'paymentMethods' => 'CC,DC', 'limit' => 20]);
     print_r($transactionSpecifiedTimeFrame->getApiResponse());
 
     // Get transactions for a specified time frame with pagination
-    $transactionPagination = $GatewayPaySDK->getTransactionByDateWithPagination(['dateFrom' => '2023-01-01 00:00:00', 'dateTo' => '2023-01-01 01:00:00','merchantTransactionId' => 'test123', 'paymentTypes' => 'DB,3D', 'paymentMethods' => 'CC,DC', 'pageNo' => 2]);
+    $transactionPagination = $CatalystPaySDK->getTransactionByDateWithPagination(['dateFrom' => '2023-01-01 00:00:00', 'dateTo' => '2023-01-01 01:00:00','merchantTransactionId' => 'test123', 'paymentTypes' => 'DB,3D', 'paymentMethods' => 'CC,DC', 'pageNo' => 2]);
     print_r($transactionPagination);
 } catch (Exception $e) {
     echo  $e->getMessage();
 }
 ```
 
-### 2) Go to root project and you can use this GatewayPaySDK class for settlement reports allow to retrieve detailed settlements data from the platform in your PHP code as follows
+### 2) Go to root project and you can use this CatalystPaySDK class for settlement reports allow to retrieve detailed settlements data from the platform in your PHP code as follows
 ```php
 require_once 'vendor/autoload.php';
 
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPaySDK;
 
 // Example usage
 try {
 
-    // Configured  GatewayPaySDK
+    // Configured  CatalystPaySDK
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
     );
 
     // Get summary level information for a certain date and/or settlement currency
-    $settlementReportBySummary = $GatewayPaySDK->getSettlementReportBySummary(['dateFrom' => '2015-08-01', 'dateTo' => '2015-08-02', 'currency' => 'EUR', 'testMode' => GatewayPaySDK::TEST_MODE_INTERNAL]);
+    $settlementReportBySummary = $CatalystPaySDK->getSettlementReportBySummary(['dateFrom' => '2015-08-01', 'dateTo' => '2015-08-02', 'currency' => 'EUR', 'testMode' => CatalystPaySDK::TEST_MODE_INTERNAL]);
     print_r($settlementReportBySummary->getApiResponse());
 
     //Get further details for a particular aggregation id.
-    $responseData = $GatewayPaySDK->getDetailLevelById(['id' => '8a82944a4cc25ebf014cc2c782423202','sortValue'=>'SettlementTxDate','sortOrder'=>'ASC', 'testMode' => GatewayPaySDK::TEST_MODE_INTERNAL]);
+    $responseData = $CatalystPaySDK->getDetailLevelById(['id' => '8a82944a4cc25ebf014cc2c782423202','sortValue'=>'SettlementTxDate','sortOrder'=>'ASC', 'testMode' => CatalystPaySDK::TEST_MODE_INTERNAL]);
     print_r($responseData->getApiResponse());
 
     // Get detail level with pagination
-    $settlementReportPagination = $GatewayPaySDK->getDetailLevelByIdWithPagination(['id' => '8a82944a4cc25ebf014cc2c782423202','reconciliationType'=>'SETTLED' ,'testMode' => GatewayPaySDK::TEST_MODE_INTERNAL, "pageNo" => 2]);
+    $settlementReportPagination = $CatalystPaySDK->getDetailLevelByIdWithPagination(['id' => '8a82944a4cc25ebf014cc2c782423202','reconciliationType'=>'SETTLED' ,'testMode' => CatalystPaySDK::TEST_MODE_INTERNAL, "pageNo" => 2]);
     print_r($settlementReportPagination);
 } catch (Exception $e) {
     echo  $e->getMessage();
@@ -352,21 +352,21 @@ try {
 
 ## Backoffice Operations
 
-### 1) Go to root project and you can use this GatewayPaySDK class for  You can perform different types of backoffice operations for a rebill is performed against a previous payment, using our REST API from the platform in your PHP code as follows
+### 1) Go to root project and you can use this CatalystPaySDK class for  You can perform different types of backoffice operations for a rebill is performed against a previous payment, using our REST API from the platform in your PHP code as follows
 
 ```php
 require_once 'vendor/autoload.php';
 
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPaySDK;
 
 // Example usage
 try {
 
-    // Configured  GatewayPaySDK
+    // Configured  CatalystPaySDK
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
@@ -380,7 +380,7 @@ try {
         'currency' => 'EUR',
     ];
 
-    $paymentsByCaptureOperations = $GatewayPay->paymentsByOperations($dataCapturePaymentsByOperations);
+    $paymentsByCaptureOperations = $CatalystPay->paymentsByOperations($dataCapturePaymentsByOperations);
     print_r($paymentsByCaptureOperations);
 
     // Refund a payment
@@ -391,7 +391,7 @@ try {
         'currency' => 'EUR',
     ];
 
-    $paymentsRefundByOperations = $GatewayPay->paymentsByOperations($dataRefundPaymentsByOperations);
+    $paymentsRefundByOperations = $CatalystPay->paymentsByOperations($dataRefundPaymentsByOperations);
     print_r($paymentsRefundByOperations);
 
     // Receipt for payment
@@ -402,7 +402,7 @@ try {
         'currency' => 'EUR',
     ];
 
-    $paymentsReceiptByOperations = $GatewayPay->paymentsByOperations($dataReceiptPaymentsByOperations);
+    $paymentsReceiptByOperations = $CatalystPay->paymentsByOperations($dataReceiptPaymentsByOperations);
     print_r($paymentsReceiptByOperations);
        
     // Rebill for payment
@@ -413,7 +413,7 @@ try {
         'currency' => 'EUR',
     ];
 
-    $paymentsRebillByOperations = $GatewayPay->paymentsByOperations($dataRebillPaymentsByOperations);
+    $paymentsRebillByOperations = $CatalystPay->paymentsByOperations($dataRebillPaymentsByOperations);
     print_r($paymentsRebillByOperations);
      
     // Reverse a payment
@@ -422,7 +422,7 @@ try {
         'paymentType' => 'RV',
     ];
 
-    $paymentsReverseByOperations = $GatewayPay->paymentsByOperations($dataReversePaymentsByOperations);
+    $paymentsReverseByOperations = $CatalystPay->paymentsByOperations($dataReversePaymentsByOperations);
     print_r($paymentsReverseByOperations);
 } catch (Exception $e) {
     echo  $e->getMessage();
@@ -430,21 +430,21 @@ try {
 
 ```
 
-### 2) Go to root project and you can use this GatewayPaySDK class for  You can perform different types of backoffice operations for Credit (stand-alone refund) using our REST API from the platform in your PHP code as follows
+### 2) Go to root project and you can use this CatalystPaySDK class for  You can perform different types of backoffice operations for Credit (stand-alone refund) using our REST API from the platform in your PHP code as follows
 
 ```php
 require_once 'vendor/autoload.php';
 
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPaySDK;
 
 // Example usage
 try {
 
-    // Configured  GatewayPaySDK
+    // Configured  CatalystPaySDK
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
@@ -461,7 +461,7 @@ try {
         'cardHolder' => 'Jane Jones',        
     ];
     
-    $paymentsByOperations = $GatewayPaySDK->CreditStandAloneRefund($dataPaymentsByOperations);
+    $paymentsByOperations = $CatalystPaySDK->CreditStandAloneRefund($dataPaymentsByOperations);
     $resultPaymentsByOperations = $paymentsByOperations->getApiResponse(); 
     print_r($resultPaymentsByOperations);
 } catch (Exception $e) {

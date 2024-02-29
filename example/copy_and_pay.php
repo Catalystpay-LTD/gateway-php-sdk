@@ -1,8 +1,8 @@
 <?php
 require_once 'vendor/autoload.php';
 
-use GatewayPay\GatewayPayResponseCode;
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPayResponseCode;
+use CatalystPay\CatalystPaySDK;
 
 ?>
 <!DOCTYPE html>
@@ -27,11 +27,11 @@ use GatewayPay\GatewayPaySDK;
         try {
             $infoMessage = $errorMessage = '';
 
-            // Configured  GatewayPaySDK
+            // Configured  CatalystPaySDK
             $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
             $entityId = '8a8294174b7ecb28014b9699220015ca';
             $isProduction = false;
-            $GatewayPaySDK = new GatewayPaySDK(
+            $CatalystPaySDK = new CatalystPaySDK(
                 $token,
                 $entityId,
                 $isProduction
@@ -41,7 +41,7 @@ use GatewayPay\GatewayPaySDK;
                 $data = [
                     'amount' => 92.00,
                     'currency' => 'EUR',
-                    'paymentType' => GatewayPaySDK::PAYMENT_TYPE_DEBIT,
+                    'paymentType' => CatalystPaySDK::PAYMENT_TYPE_DEBIT,
                     'billing.city' => $_POST['billing_city'],
                     'billing.country' => $_POST['billing_country'],
                     'billing.street1' => $_POST['billing_street1'],
@@ -53,12 +53,12 @@ use GatewayPay\GatewayPaySDK;
                 ];
 
                 //Prepare Check out form 
-                $responseData = $GatewayPaySDK->prepareCheckout($data);
+                $responseData = $CatalystPaySDK->prepareCheckout($data);
 
                 // Check if isPrepareCheckoutSuccess is true
                 if ($responseData->isCheckoutSuccess()) {
                     //Show checkout success
-                    $infoMessage = 'The checkout returned ' . $responseData->getResultCode() . ' instead of ' . GatewayPayResponseCode::CREATED_CHECKOUT;
+                    $infoMessage = 'The checkout returned ' . $responseData->getResultCode() . ' instead of ' . CatalystPayResponseCode::CREATED_CHECKOUT;
                     $wpwlOptions = $_POST['wpwlOptions'];
 
                     // Payment with card
@@ -67,33 +67,33 @@ use GatewayPay\GatewayPaySDK;
                             'checkoutId' => $responseData->getId(),
                             'shopperResultUrl' => 'http://localhost/gateway-php-sdk/copy_and_pay_result.php',
                             'dataBrands' => [
-                                GatewayPaySDK::PAYMENT_BRAND_VISA,
-                                GatewayPaySDK::PAYMENT_BRAND_MASTERCARD,
-                                GatewayPaySDK::PAYMENT_BRAND_AMEX
+                                CatalystPaySDK::PAYMENT_BRAND_VISA,
+                                CatalystPaySDK::PAYMENT_BRAND_MASTERCARD,
+                                CatalystPaySDK::PAYMENT_BRAND_AMEX
                             ],
                             'wpwlOptions' => $wpwlOptions
                         ];
-                        echo $GatewayPaySDK->createPaymentForm($formData);
+                        echo $CatalystPaySDK->createPaymentForm($formData);
                     }
                     // Payment with google pay
                     if (isset($_POST['pay_by']) && $_POST['pay_by'] == "gpay") {
                         $formData2 = [
                             'checkoutId' => $responseData->getId(),
                             'shopperResultUrl' => 'http://localhost/gateway-php-sdk/copy_and_pay_result.php',
-                            'dataBrands' => [GatewayPaySDK::PAYMENT_BRAND_GOOGLE_PAY],
+                            'dataBrands' => [CatalystPaySDK::PAYMENT_BRAND_GOOGLE_PAY],
                             'wpwlOptions' => $wpwlOptions
                         ];
-                        echo $GatewayPaySDK->createPaymentForm($formData2);
+                        echo $CatalystPaySDK->createPaymentForm($formData2);
                     }
                     // Payment with rocket fuel
                     if (isset($_POST['pay_by']) && $_POST['pay_by'] == "rocketfuel") {
                         $formData4 = [
                             'checkoutId' => $responseData->getId(),
                             'shopperResultUrl' => 'http://localhost/gateway-php-sdk/copy_and_pay_result.php',
-                            'dataBrands' => [GatewayPaySDK::PAYMENT_BRAND_ROCKET_FUEL],
+                            'dataBrands' => [CatalystPaySDK::PAYMENT_BRAND_ROCKET_FUEL],
                             'wpwlOptions' => $wpwlOptions
                         ];
-                        echo $GatewayPaySDK->createPaymentForm($formData4);
+                        echo $CatalystPaySDK->createPaymentForm($formData4);
                     }
                 } else {
                     $errorMessage = "The Prepare Checkout was not successful";

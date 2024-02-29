@@ -1,16 +1,16 @@
 <?php
 require_once 'vendor/autoload.php';
 
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPaySDK;
 
 // Example usage
 try {
 
-    // Configured  GatewayPaySDK
+    // Configured  CatalystPaySDK
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
@@ -41,7 +41,7 @@ try {
         if (isset($_POST['paymentType'])) {
             $dataPaymentsByOperations['paymentType'] = $_POST['paymentType'];
         }
-        $paymentsByOperations = $GatewayPaySDK->paymentsByOperations($dataPaymentsByOperations);
+        $paymentsByOperations = $CatalystPaySDK->paymentsByOperations($dataPaymentsByOperations);
         $resultPaymentsByOperations = $paymentsByOperations->getApiResponse();
     }
     //Get further details for a particular aggregation id.
@@ -58,7 +58,7 @@ try {
             'cardHolder' => $_POST['card_holder'],
         ];
 
-        $creditStandAloneRefund = $GatewayPaySDK->CreditStandAloneRefund($dataPaymentsByOperations);
+        $creditStandAloneRefund = $CatalystPaySDK->CreditStandAloneRefund($dataPaymentsByOperations);
         $resultCreditStandAloneRefund = $creditStandAloneRefund->getApiResponse();
     }
 } catch (Exception $e) {
@@ -153,10 +153,10 @@ try {
                         <div class="form-group my-2">
                             <label for="operations" class="text-danger"> paymentBrand*:</label>
                             <select name="paymentBrand" id="paymentBrand" class="form-control" required>
-                                <option value="<?php echo GatewayPaySDK::PAYMENT_BRAND_VISA; ?>" selected>
-                                    <?php echo GatewayPaySDK::PAYMENT_BRAND_VISA; ?></option>
-                                <option value="<?php echo GatewayPaySDK::PAYMENT_BRAND_AMEX; ?>"><?php echo GatewayPaySDK::PAYMENT_BRAND_AMEX; ?></option>
-                                <option value="<?php echo GatewayPaySDK::PAYMENT_BRAND_MASTERCARD; ?>"><?php echo GatewayPaySDK::PAYMENT_BRAND_MASTERCARD; ?></option>
+                                <option value="<?php echo CatalystPaySDK::PAYMENT_BRAND_VISA; ?>" selected>
+                                    <?php echo CatalystPaySDK::PAYMENT_BRAND_VISA; ?></option>
+                                <option value="<?php echo CatalystPaySDK::PAYMENT_BRAND_AMEX; ?>"><?php echo CatalystPaySDK::PAYMENT_BRAND_AMEX; ?></option>
+                                <option value="<?php echo CatalystPaySDK::PAYMENT_BRAND_MASTERCARD; ?>"><?php echo CatalystPaySDK::PAYMENT_BRAND_MASTERCARD; ?></option>
                             </select>
                         </div>
                         <div class="form-group my-2">

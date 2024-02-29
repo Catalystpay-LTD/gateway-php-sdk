@@ -1,16 +1,16 @@
 <?php
 require_once 'vendor/autoload.php';
 
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPaySDK;
 
 // Example usage
 try {
 
-    // Configured  GatewayPaySDK
+    // Configured  CatalystPaySDK
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
@@ -30,16 +30,16 @@ try {
             $dataSettlementReportBySummary['currency'] = $_POST['currency'];
         }
 
-        $dataSettlementReportBySummary['testMode'] = GatewayPaySDK::TEST_MODE_INTERNAL;
+        $dataSettlementReportBySummary['testMode'] = CatalystPaySDK::TEST_MODE_INTERNAL;
 
-        $settlementReportBySummary = $GatewayPaySDK->getSettlementReportBySummary($dataSettlementReportBySummary);
+        $settlementReportBySummary = $CatalystPaySDK->getSettlementReportBySummary($dataSettlementReportBySummary);
         $resultGetDetailLevel = $settlementReportBySummary->getApiResponse();
     }
 
     //Get further details for a particular aggregation id.
     if (isset($_POST['submit2'])) {
         $detailLevelData['id'] = $_POST['id']; // id 
-        $detailLevelData['testMode'] = GatewayPaySDK::TEST_MODE_INTERNAL;
+        $detailLevelData['testMode'] = CatalystPaySDK::TEST_MODE_INTERNAL;
         // check if sortValue  
         if (isset($_POST['sortValue'])) {
             $detailLevelData['sortValue'] = $_POST['sortValue'];
@@ -48,7 +48,7 @@ try {
         if (isset($_POST['sortOrder'])) {
             $detailLevelData['sortOrder'] = $_POST['sortOrder'];
         }
-        $responseDetailLevelData = $GatewayPaySDK->getDetailLevelById($detailLevelData);
+        $responseDetailLevelData = $CatalystPaySDK->getDetailLevelById($detailLevelData);
         $resultGetSummaryLevel = $responseDetailLevelData->getApiResponse();
     }
 
@@ -59,8 +59,8 @@ try {
         if (isset($_POST['pageNo'])) {
             $detailLevelWithPaginationData['pageNo'] = $_POST['pageNo'];
         }
-        $detailLevelWithPaginationData['testMode'] = GatewayPaySDK::TEST_MODE_INTERNAL;
-        $settlementReportPagination = $GatewayPaySDK->getDetailLevelByIdWithPagination($detailLevelWithPaginationData);
+        $detailLevelWithPaginationData['testMode'] = CatalystPaySDK::TEST_MODE_INTERNAL;
+        $settlementReportPagination = $CatalystPaySDK->getDetailLevelByIdWithPagination($detailLevelWithPaginationData);
         $resultGetDetailLevelWithPagination = $settlementReportPagination->getApiResponse();
     }
 } catch (Exception $e) {

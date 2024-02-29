@@ -1,9 +1,9 @@
 <?php
 
-namespace GatewayPay\Traits\Client;
+namespace CatalystPay\Traits\Client;
 
-use GatewayPay\GatewayPayResponse;
-use GatewayPay\Exceptions\GatewayPayException;
+use CatalystPay\CatalystPayResponse;
+use CatalystPay\Exceptions\CatalystPayException;
 
 /**
  * Trait for handling HTTP GET requests.
@@ -46,7 +46,7 @@ trait PerformsGET
         // Check if an error occurred during the request
         if ($response === false) {
             // Throw an exception with the error message
-            throw new GatewayPayException(
+            throw new CatalystPayException(
                 curl_error($ch),
                 400
             );
@@ -58,10 +58,10 @@ trait PerformsGET
         // return $response;
 
         // Handle Response 
-        $GatewayPayResponse = new GatewayPayResponse();
-        $GatewayPayResponse->fromApiResponse($response);
-        //print_r($GatewayPayResponse->getResultCode());
+        $CatalystPayResponse = new CatalystPayResponse();
+        $CatalystPayResponse->fromApiResponse($response);
+        //print_r($CatalystPayResponse->getResultCode());
         // exit;
-        return $GatewayPayResponse;
+        return $CatalystPayResponse;
     }
 }

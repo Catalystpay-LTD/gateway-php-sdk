@@ -1,7 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
 
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPaySDK;
 
 // Example usage
 try {
@@ -10,7 +10,7 @@ try {
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
@@ -19,7 +19,7 @@ try {
     // Handle the payment Registration status as needed
     if (isset(($_GET['id']))) {
         $checkoutId = $_GET['id'];
-        $responseData = $GatewayPaySDK->getRegistrationStatus($checkoutId);
+        $responseData = $CatalystPaySDK->getRegistrationStatus($checkoutId);
         print_r($responseData->getApiResponse()); // Get payment Registration status response 
         var_dump($responseData->isRegistrationStatus()); // Check  payment Registration status value True or False
 
@@ -29,18 +29,18 @@ try {
 
             // Form Values defined variable
             $data = [
-                'paymentBrand' => GatewayPaySDK::PAYMENT_BRAND_VISA,
-                'paymentType' =>  GatewayPaySDK::PAYMENT_TYPE_DEBIT,
+                'paymentBrand' => CatalystPaySDK::PAYMENT_BRAND_VISA,
+                'paymentType' =>  CatalystPaySDK::PAYMENT_TYPE_DEBIT,
                 'amount' => 92.00,
                 'currency' => 'EUR',
-                'standingInstructionType' =>  GatewayPaySDK::STANDING_INSTRUCTION_TYPE_UNSCHEDULED,
-                'standingInstructionMode' =>  GatewayPaySDK::STANDING_INSTRUCTION_MODE_INITIAL,
-                'standingInstructionSource' => GatewayPaySDK::STANDING_INSTRUCTION_SOURCE_CIT,
-                'testMode' => GatewayPaySDK::TEST_MODE_EXTERNAL
+                'standingInstructionType' =>  CatalystPaySDK::STANDING_INSTRUCTION_TYPE_UNSCHEDULED,
+                'standingInstructionMode' =>  CatalystPaySDK::STANDING_INSTRUCTION_MODE_INITIAL,
+                'standingInstructionSource' => CatalystPaySDK::STANDING_INSTRUCTION_SOURCE_CIT,
+                'testMode' => CatalystPaySDK::TEST_MODE_EXTERNAL
             ];
 
             // Send payment using the token
-            $registerPayment = $GatewayPaySDK->sendRegistrationTokenPayment($paymentId, $data);
+            $registerPayment = $CatalystPaySDK->sendRegistrationTokenPayment($paymentId, $data);
 
             //check if payment Successful true
             $isPaymentSuccessful =  $registerPayment->isSuccessful();

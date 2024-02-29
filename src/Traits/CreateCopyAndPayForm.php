@@ -1,13 +1,13 @@
 <?php
 
-namespace GatewayPay\Traits;
+namespace CatalystPay\Traits;
 
-use GatewayPay\GatewayPaySDK;
-use GatewayPay\Traits\Client\PerformsGET;
+use CatalystPay\CatalystPaySDK;
+use CatalystPay\Traits\Client\PerformsGET;
 
 /**
  * Trait CreateCopyAndPayForm
- * This trait provides methods to interact with the GatewayPay Create the payment form COPYandPAY  API.
+ * This trait provides methods to interact with the CatalystPay Create the payment form COPYandPAY  API.
  */
 trait CreateCopyAndPayForm
 {
@@ -33,7 +33,7 @@ trait CreateCopyAndPayForm
      * @param array $dataBrands The payment brands to display (optional).
      * @return string The HTML form with payment widgets.
      */
-    public function getPaymentForm($shopperResultUrl = '', $dataBrands = [GatewayPaySDK::PAYMENT_BRAND_VISA, GatewayPaySDK::PAYMENT_BRAND_MASTERCARD, GatewayPaySDK::PAYMENT_BRAND_AMEX])
+    public function getPaymentForm($shopperResultUrl = '', $dataBrands = [CatalystPaySDK::PAYMENT_BRAND_VISA, CatalystPaySDK::PAYMENT_BRAND_MASTERCARD, CatalystPaySDK::PAYMENT_BRAND_AMEX])
     {
         // If dataBrands is not empty, convert it to a comma-separated string/ If dataBrands is not empty, convert it to a comma-separated string
         if (!empty($dataBrands)) {
@@ -72,7 +72,7 @@ trait CreateCopyAndPayForm
      */
     public function getCopyAndPayScriptUrl($checkoutId)
     {
-        return $this->baseUrl . GatewayPaySDK::URI_PAYMENT_WIDGETS
+        return $this->baseUrl . CatalystPaySDK::URI_PAYMENT_WIDGETS
             . '?checkoutId=' . $checkoutId;
     }
 }

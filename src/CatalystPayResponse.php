@@ -1,15 +1,15 @@
 <?php
 
-namespace GatewayPay;
+namespace CatalystPay;
 
-use GatewayPay\Exceptions\GatewayPayException;
-use GatewayPay\Traits\Response\ResultCode;
+use CatalystPay\Exceptions\CatalystPayException;
+use CatalystPay\Traits\Response\ResultCode;
 
 /**
- * Class GatewayPayResponse
- * Represents a response from the GatewayPay API.
+ * Class CatalystPayResponse
+ * Represents a response from the CatalystPay API.
  */
-class GatewayPayResponse
+class CatalystPayResponse
 {
     use ResultCode;
     // Constants for various result codes
@@ -48,7 +48,7 @@ class GatewayPayResponse
      * Set the JSON content of the response.
      *
      * @param string $json The JSON content.
-     * @return GatewayPayResponse The current instance for method chaining.
+     * @return CatalystPayResponse The current instance for method chaining.
      */
     public function setJson($json)
     {
@@ -79,7 +79,7 @@ class GatewayPayResponse
             $json = $response;
             return $this->setJson($json)->parseJson();
         } else {
-            throw new GatewayPayException(
+            throw new CatalystPayException(
                 'The request did not return JSON',
                 $this->getResultCode()
             );
@@ -99,7 +99,7 @@ class GatewayPayResponse
     /**
      * Parses the JSON content of the response.
      *
-     * @return GatewayPayResponse The current instance for method chaining.
+     * @return CatalystPayResponse The current instance for method chaining.
      */
     public function parseJson()
     {
@@ -189,7 +189,7 @@ class GatewayPayResponse
     public function isSuccessful()
     {
         $categories = $this->getResultCodeCategories($this->getResultCode());
-        return in_array(GatewayPayResponse::RESULT_CODE_CAT_SUCCESS_PROCESS, $categories);
+        return in_array(CatalystPayResponse::RESULT_CODE_CAT_SUCCESS_PROCESS, $categories);
     }
 
     /**
@@ -199,7 +199,7 @@ class GatewayPayResponse
      */
     public function isPaymentRequestNotFound()
     {
-        return $this->getResultCode() === GatewayPayResponseCode::REQUEST_NOT_FOUND;
+        return $this->getResultCode() === CatalystPayResponseCode::REQUEST_NOT_FOUND;
     }
 
     /**
@@ -209,7 +209,7 @@ class GatewayPayResponse
      */
     public function isPaymentStatus()
     {
-        return $this->getResultCode()  === GatewayPayResponseCode::CREATED_PAYMENT;
+        return $this->getResultCode()  === CatalystPayResponseCode::CREATED_PAYMENT;
     }
 
     /**
@@ -220,7 +220,7 @@ class GatewayPayResponse
     public function isPaymentTransactionPending()
     {
 
-        return  $this->getResultCode() === GatewayPayResponseCode::TRANSACTION_PENDING;
+        return  $this->getResultCode() === CatalystPayResponseCode::TRANSACTION_PENDING;
     }
 
     /**
@@ -230,7 +230,7 @@ class GatewayPayResponse
      */
     public function isCheckoutSuccess()
     {
-        return $this->getResultCode() === GatewayPayResponseCode::CREATED_CHECKOUT;
+        return $this->getResultCode() === CatalystPayResponseCode::CREATED_CHECKOUT;
     }
 
     /**
@@ -240,7 +240,7 @@ class GatewayPayResponse
      */
     public function isRegistrationStatus()
     {
-        return $this->getResultCode()  === GatewayPayResponseCode::CREATED_REGISTRATION_TOKEN;
+        return $this->getResultCode()  === CatalystPayResponseCode::CREATED_REGISTRATION_TOKEN;
     }
 
     /**

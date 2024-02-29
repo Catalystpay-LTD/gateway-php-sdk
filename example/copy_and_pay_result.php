@@ -1,7 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
 
-use GatewayPay\GatewayPaySDK;
+use CatalystPay\CatalystPaySDK;
 
 // Example usage
 try {
@@ -9,7 +9,7 @@ try {
     $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
     $entityId = '8a8294174b7ecb28014b9699220015ca';
     $isProduction = false;
-    $GatewayPaySDK = new GatewayPaySDK(
+    $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
         $isProduction
@@ -18,7 +18,7 @@ try {
     // Handle the payment status as needed
     if (isset(($_GET['id']))) {
         $checkoutId = $_GET['id'];
-        $responseData = $GatewayPaySDK->getPaymentStatus($checkoutId);
+        $responseData = $CatalystPaySDK->getPaymentStatus($checkoutId);
         print_r($responseData->getApiResponse()); // Get payment status response 
         var_dump($responseData->isPaymentStatus()); // Check  payment status value True or False
 

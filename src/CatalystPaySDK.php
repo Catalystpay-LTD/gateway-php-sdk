@@ -1,19 +1,19 @@
 <?php
 
-namespace GatewayPay;
+namespace CatalystPay;
 
-use GatewayPay\Traits\BackofficeOperations;
-use GatewayPay\Traits\CopyAndPayCheckout;
-use GatewayPay\Traits\CreateCopyAndPayForm;
-use GatewayPay\Traits\CreateRegistrationTokenForm;
-use GatewayPay\Traits\RegistrationTokens;
-use GatewayPay\Traits\SettlementReports;
-use GatewayPay\Traits\TransactionReports;
+use CatalystPay\Traits\BackofficeOperations;
+use CatalystPay\Traits\CopyAndPayCheckout;
+use CatalystPay\Traits\CreateCopyAndPayForm;
+use CatalystPay\Traits\CreateRegistrationTokenForm;
+use CatalystPay\Traits\RegistrationTokens;
+use CatalystPay\Traits\SettlementReports;
+use CatalystPay\Traits\TransactionReports;
 
 /**
- * GatewayPaySDK class for handling payment operations.
+ * CatalystPaySDK class for handling payment operations.
  */
-class GatewayPaySDK
+class CatalystPaySDK
 {
     use CopyAndPayCheckout, CreateCopyAndPayForm, RegistrationTokens, CreateRegistrationTokenForm, TransactionReports, SettlementReports, BackofficeOperations;
 
@@ -76,7 +76,7 @@ class GatewayPaySDK
     const STANDING_INSTRUCTION_SOURCE_CIT = 'CIT';
 
     /**
-     * Constructs a new GatewayPaySDK instance.
+     * Constructs a new CatalystPaySDK instance.
      *
      * @param string $token    The API token for authentication.
      * @param string $entityId The entity ID for the payment.

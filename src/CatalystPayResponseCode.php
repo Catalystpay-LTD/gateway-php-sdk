@@ -1,12 +1,12 @@
 <?php
 
-namespace GatewayPay;
+namespace CatalystPay;
 
 /**
- * Class GatewayPayResponseCode
- * Contains constants representing response codes from the GatewayPay API.
+ * Class CatalystPayResponseCode
+ * Contains constants representing response codes from the CatalystPay API.
  */
-class GatewayPayResponseCode
+class CatalystPayResponseCode
 {
     /**
      * The response code for a created checkout.

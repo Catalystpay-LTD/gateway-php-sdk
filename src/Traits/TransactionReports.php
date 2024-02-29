@@ -1,9 +1,9 @@
 <?php
 
-namespace GatewayPay\Traits;
+namespace CatalystPay\Traits;
 
-use GatewayPay\GatewayPaySDK;
-use GatewayPay\Traits\Client\PerformsGET;
+use CatalystPay\CatalystPaySDK;
+use CatalystPay\Traits\Client\PerformsGET;
 
 /**
  * Trait TransactionReports
@@ -34,7 +34,7 @@ trait TransactionReports
         if (isset($data['paymentMethods '])) {
             $query = "&paymentMethods =" . $data['paymentMethods'];
         }
-        $url = $this->baseUrl . GatewayPaySDK::URI_TRANSACTION_REPORTS . '/' . $data['id'] . '?entityId=' . $this->entityId . $query;
+        $url = $this->baseUrl . CatalystPaySDK::URI_TRANSACTION_REPORTS . '/' . $data['id'] . '?entityId=' . $this->entityId . $query;
         return $this->doGET($url, $this->isProduction, $this->token);
     }
 
@@ -54,7 +54,7 @@ trait TransactionReports
             $query = "merchantTransactionId=" . $merchantTransactionId;
         }
 
-        $url = $this->baseUrl . GatewayPaySDK::URI_TRANSACTION_REPORTS . '?' . $query . '&entityId=' . $this->entityId;
+        $url = $this->baseUrl . CatalystPaySDK::URI_TRANSACTION_REPORTS . '?' . $query . '&entityId=' . $this->entityId;
         return $this->doGET($url, $this->isProduction, $this->token);
     }
 
@@ -92,7 +92,7 @@ trait TransactionReports
             $query .= "&limit=" . $data['limit'];
         }
 
-        $url = $this->baseUrl . GatewayPaySDK::URI_TRANSACTION_REPORTS . '?' . $query . '&entityId=' . $this->entityId;
+        $url = $this->baseUrl . CatalystPaySDK::URI_TRANSACTION_REPORTS . '?' . $query . '&entityId=' . $this->entityId;
         return $this->doGET($url, $this->isProduction, $this->token);
     }
 
@@ -135,7 +135,7 @@ trait TransactionReports
         if (!empty($data['pageNo']) && $data['pageNo'] > 0) {
             $query .= "&pageNo=" . $data['pageNo'];
         }
-        $url = $this->baseUrl . GatewayPaySDK::URI_TRANSACTION_REPORTS . '?' . $query . '&entityId=' . $this->entityId;
+        $url = $this->baseUrl . CatalystPaySDK::URI_TRANSACTION_REPORTS . '?' . $query . '&entityId=' . $this->entityId;
         return $this->doGET($url, $this->isProduction, $this->token);
     }
 }

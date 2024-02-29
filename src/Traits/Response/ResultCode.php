@@ -1,13 +1,13 @@
 <?php
 
-namespace GatewayPay\Traits\Response;
+namespace CatalystPay\Traits\Response;
 
 /**
  * A trait for interpreting result codes and categories.
  *
  * This trait provides methods for looking up result codes, initializing result code data,
  * and getting result code categories based on predefined patterns. It is used to interpret
- * the result codes received from the GatewayPay API responses.
+ * the result codes received from the CatalystPay API responses.
  */
 trait ResultCode
 {

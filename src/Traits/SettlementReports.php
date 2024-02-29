@@ -1,9 +1,9 @@
 <?php
 
-namespace GatewayPay\Traits;
+namespace CatalystPay\Traits;
 
-use GatewayPay\GatewayPaySDK;
-use GatewayPay\Traits\Client\PerformsGET;
+use CatalystPay\CatalystPaySDK;
+use CatalystPay\Traits\Client\PerformsGET;
 
 /**
  * Trait SettlementReports
@@ -39,7 +39,7 @@ trait SettlementReports
             $query .= "&testMode=" . $data['testMode'];
         }
 
-        $url = $this->baseUrl . GatewayPaySDK::URI_SETTLEMENT_REPORTS . '?' . $query . '&entityId=' . $this->entityId;
+        $url = $this->baseUrl . CatalystPaySDK::URI_SETTLEMENT_REPORTS . '?' . $query . '&entityId=' . $this->entityId;
 
         $response = $this->doGET($url, $this->isProduction, $this->token);
         return  $response;
@@ -71,7 +71,7 @@ trait SettlementReports
             $query .= "&sortOrder=" . $data['sortOrder'];
         }
 
-        $url = $this->baseUrl . GatewayPaySDK::URI_SETTLEMENT_REPORTS . '/' . $data['id'] . '?entityId=' . $this->entityId . $query;
+        $url = $this->baseUrl . CatalystPaySDK::URI_SETTLEMENT_REPORTS . '/' . $data['id'] . '?entityId=' . $this->entityId . $query;
         return $this->doGET($url, $this->isProduction, $this->token);
     }
 
@@ -101,7 +101,7 @@ trait SettlementReports
             $query .= "&pageNo=" . $data['pageNo'];
         }
 
-        $url = $this->baseUrl . GatewayPaySDK::URI_SETTLEMENT_REPORTS_PAGINATION . '/' . $data['id'] . '?entityId=' . $this->entityId . $query;
+        $url = $this->baseUrl . CatalystPaySDK::URI_SETTLEMENT_REPORTS_PAGINATION . '/' . $data['id'] . '?entityId=' . $this->entityId . $query;
         return $this->doGET($url, $this->isProduction, $this->token);
     }
 }

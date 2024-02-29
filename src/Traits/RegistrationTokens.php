@@ -1,14 +1,14 @@
 <?php
 
-namespace GatewayPay\Traits;
+namespace CatalystPay\Traits;
 
-use GatewayPay\GatewayPaySDK;
-use GatewayPay\Traits\Client\PerformsGET;
-use GatewayPay\Traits\Client\PerformsPOST;
+use CatalystPay\CatalystPaySDK;
+use CatalystPay\Traits\Client\PerformsGET;
+use CatalystPay\Traits\Client\PerformsPOST;
 
 /**
  * Trait RegistrationTokens
- * This trait provides methods to interact with the GatewayPay COPYandPAY Registration Tokens API.
+ * This trait provides methods to interact with the CatalystPay COPYandPAY Registration Tokens API.
  */
 trait RegistrationTokens
 {
@@ -29,7 +29,7 @@ trait RegistrationTokens
             "testMode" => $data['testMode'],
             "createRegistration" => $data['createRegistration'],
         ];
-        $url = $this->baseUrl . GatewayPaySDK::URI_CHECKOUTS;
+        $url = $this->baseUrl . CatalystPaySDK::URI_CHECKOUTS;
         $response =  $this->doPOST($url, $baseOptions, $this->isProduction, $this->token);
         return $response;
     }
@@ -42,7 +42,7 @@ trait RegistrationTokens
      */
     public function getRegistrationStatus($checkoutId)
     {
-        $url = $this->baseUrl . GatewayPaySDK::URI_CHECKOUTS . '/' . $checkoutId . GatewayPaySDK::URI_REGISTRATION . '?entityId=' . $this->entityId;
+        $url = $this->baseUrl . CatalystPaySDK::URI_CHECKOUTS . '/' . $checkoutId . CatalystPaySDK::URI_REGISTRATION . '?entityId=' . $this->entityId;
         $response =  $this->doGET($url, $this->isProduction, $this->token);
         return $response;
     }
@@ -69,7 +69,7 @@ trait RegistrationTokens
             "testMode" => $data['testMode']
         ];
 
-        $url = $this->baseUrl . GatewayPaySDK::URI_REGISTRATIONS . '/' . $paymentId . GatewayPaySDK::URI_PAYMENTS;
+        $url = $this->baseUrl . CatalystPaySDK::URI_REGISTRATIONS . '/' . $paymentId . CatalystPaySDK::URI_PAYMENTS;
         $response =  $this->doPOST($url, $baseOptions, $this->isProduction, $this->token);
         return $response;
     }

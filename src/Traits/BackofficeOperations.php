@@ -1,10 +1,10 @@
 <?php
 
-namespace GatewayPay\Traits;
+namespace CatalystPay\Traits;
 
-use GatewayPay\GatewayPaySDK;
-use GatewayPay\Traits\Client\PerformsGET;
-use GatewayPay\Traits\Client\PerformsPOST;
+use CatalystPay\CatalystPaySDK;
+use CatalystPay\Traits\Client\PerformsGET;
+use CatalystPay\Traits\Client\PerformsPOST;
 
 /**
  * Trait Backoffice Operations
@@ -36,7 +36,7 @@ trait BackofficeOperations
         }
 
         //print_r($baseOptions);
-        $url = $this->baseUrl . GatewayPaySDK::URI_BACKOFFICE_OPERATIONS_PAYMENTS . '/' . $data['paymentId'];
+        $url = $this->baseUrl . CatalystPaySDK::URI_BACKOFFICE_OPERATIONS_PAYMENTS . '/' . $data['paymentId'];
         $response =  $this->doPOST($url, $baseOptions, $this->isProduction, $this->token);
 
         return  $response;
@@ -65,7 +65,7 @@ trait BackofficeOperations
         ];
 
         //print_r($baseOptions);
-        $url = $this->baseUrl . GatewayPaySDK::URI_BACKOFFICE_OPERATIONS_PAYMENTS;
+        $url = $this->baseUrl . CatalystPaySDK::URI_BACKOFFICE_OPERATIONS_PAYMENTS;
         $response =  $this->doPOST($url, $baseOptions, $this->isProduction, $this->token);
         return  $response;
     }
