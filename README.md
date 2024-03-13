@@ -469,3 +469,29 @@ try {
 }
 
 ```
+
+## Webhook Notifications
+
+When using an Asynchronous workflow, you need to parse the incoming extension in order to ensure its authenticity and verify it against Catalyst Payc notification server.
+
+Example:
+
+```php
+
+require_once 'vendor/autoload.php';
+
+use CatalystPay\Notification;
+// Example usage
+try {
+    $http_body =$_POST;
+    //    print_r($http_body);
+   // Configured  CatalystPaySDK
+   //$http_body = "0A3471C72D9BE49A8520F79C66BBD9A12FF9";
+   $notification = new Notification($http_body);
+
+   //Get decrypted message from webhook
+   echo $responseData = $notification->getDecryptedMessage($http_body);
+} catch (Exception $e) {
+    echo $errorMessage = $e->getMessage();
+}
+```
