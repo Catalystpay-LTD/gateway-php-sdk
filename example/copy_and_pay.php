@@ -3,7 +3,13 @@ require_once 'vendor/autoload.php';
 
 use CatalystPay\CatalystPayResponseCode;
 use CatalystPay\CatalystPaySDK;
+// Start the session
+session_start();
 
+// check configuration
+if(empty( $_SESSION["serverData"])){
+    header("Location: index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +24,7 @@ use CatalystPay\CatalystPaySDK;
 </head>
 
 <body>
-
+<?php include_once('header.php');?>
     <div class="container">
 
         <?php
@@ -28,9 +34,9 @@ use CatalystPay\CatalystPaySDK;
             $infoMessage = $errorMessage = '';
 
             // Configured  CatalystPaySDK
-            $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
-            $entityId = '8a8294174b7ecb28014b9699220015ca';
-            $isProduction = false;
+            $token =  $_SESSION["serverData"]['token'];
+            $entityId = $_SESSION["serverData"]['entityId'];
+            $isProduction =  $_SESSION["serverData"]['isProduction'] =='false'?false:true ;
             $CatalystPaySDK = new CatalystPaySDK(
                 $token,
                 $entityId,
@@ -65,7 +71,7 @@ use CatalystPay\CatalystPaySDK;
                     if (isset($_POST['pay_by']) && $_POST['pay_by'] == "card") {
                         $formData = [
                             'checkoutId' => $responseData->getId(),
-                            'shopperResultUrl' => 'http://localhost/gateway-php-sdk/copy_and_pay_result.php',
+                            'shopperResultUrl' => 'http://localhost/catalystpay/copy_and_pay_result.php',
                             'dataBrands' => [
                                 CatalystPaySDK::PAYMENT_BRAND_VISA,
                                 CatalystPaySDK::PAYMENT_BRAND_MASTERCARD,
@@ -79,7 +85,7 @@ use CatalystPay\CatalystPaySDK;
                     if (isset($_POST['pay_by']) && $_POST['pay_by'] == "gpay") {
                         $formData2 = [
                             'checkoutId' => $responseData->getId(),
-                            'shopperResultUrl' => 'http://localhost/gateway-php-sdk/copy_and_pay_result.php',
+                            'shopperResultUrl' => 'http://localhost/catalystpay/copy_and_pay_result.php',
                             'dataBrands' => [CatalystPaySDK::PAYMENT_BRAND_GOOGLE_PAY],
                             'wpwlOptions' => $wpwlOptions
                         ];
@@ -89,7 +95,7 @@ use CatalystPay\CatalystPaySDK;
                     if (isset($_POST['pay_by']) && $_POST['pay_by'] == "rocketfuel") {
                         $formData4 = [
                             'checkoutId' => $responseData->getId(),
-                            'shopperResultUrl' => 'http://localhost/gateway-php-sdk/copy_and_pay_result.php',
+                            'shopperResultUrl' => 'http://localhost/catalystpay/copy_and_pay_result.php',
                             'dataBrands' => [CatalystPaySDK::PAYMENT_BRAND_ROCKET_FUEL],
                             'wpwlOptions' => $wpwlOptions
                         ];

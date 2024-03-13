@@ -1,15 +1,23 @@
 <?php
 require_once 'vendor/autoload.php';
 
+use CatalystPay\CatalystPayResponseCode;
 use CatalystPay\CatalystPaySDK;
+// Start the session
+session_start();
+
+// check configuration
+if(empty( $_SESSION["serverData"])){
+    header("Location: index.php");
+}
 
 // Example usage
 try {
     $errorMsg = '';
     $isPaymentSuccessful = false;
-    $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
-    $entityId = '8a8294174b7ecb28014b9699220015ca';
-    $isProduction = false;
+    $token =  $_SESSION["serverData"]['token'];
+    $entityId = $_SESSION["serverData"]['entityId'];
+    $isProduction =  $_SESSION["serverData"]['isProduction'] =='false'?false:true ;
     $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
@@ -70,6 +78,7 @@ try {
 </head>
 
 <body>
+    <?php include_once('header.php');?>
     <div class="vh-100 d-flex justify-content-center align-items-center">
         <div>
             <?php

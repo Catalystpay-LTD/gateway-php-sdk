@@ -1,15 +1,23 @@
 <?php
 require_once 'vendor/autoload.php';
 
+use CatalystPay\CatalystPayResponseCode;
 use CatalystPay\CatalystPaySDK;
+// Start the session
+session_start();
 
+// check configuration
+if(empty( $_SESSION["serverData"])){
+    header("Location: index.php");
+}
 // Example usage
 try {
 
     // Configured  CatalystPaySDK
-    $token = 'OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg=';
-    $entityId = '8a8294174b7ecb28014b9699220015ca';
-    $isProduction = false;
+    $token =  $_SESSION["serverData"]['token'];
+    $entityId = $_SESSION["serverData"]['entityId'];
+    $isProduction = $_SESSION["serverData"]['isProduction'];
+    
     $CatalystPaySDK = new CatalystPaySDK(
         $token,
         $entityId,
@@ -77,10 +85,16 @@ try {
             display: none;
         }
     </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
+<?php include_once('header.php');?>
     <div class="row">
         <div class="col-md-12 my-5 d-flex justify-content-center align-items-center">
             <div class="form-group">
