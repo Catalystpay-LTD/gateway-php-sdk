@@ -1,41 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require_once "config.php";
+require_once 'vendor/autoload.php';
+use CatalystPay\Notification;
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webhook Notification</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+  if(!empty(file_get_contents("php://input"))) {
+    $raw_data = file_get_contents("php://input");
+    if(!empty($raw_data))
+    {
+      //$http_body = "0A3471C72D9BE49A8520F79C66BBD9A12FF9";
+      $http_body = file_get_contents("php://input");
+      $notification = new Notification($raw_data);
+   
+      //Get decrypted message from webhook  
+      $decrypted_data = $notification->getDecryptedMessage($raw_data);
 
-<body>
-    <div class="custom-box box4">
-        <div class="row m-5">
-            <h1>Get Webhook Notification Response :</h1>
-        <?php
-        require_once 'vendor/autoload.php';
-
-        use CatalystPay\Notification;
-        // Example usage
-        try {
-
-            $http_body =$_POST;
-            //    print_r($http_body);
-           // Configured  CatalystPaySDK
-           //$http_body = "0A3471C72D9BE49A8520F79C66BBD9A12FF9";
-           $notification = new Notification($http_body);
-
-           //Get decrypted message from webhook  
-           echo $responseData = $notification->getDecryptedMessage($http_body);
-        } catch (Exception $e) {
-            echo $errorMessage = $e->getMessage();
-        }
-        ?>
+      // Prepare an insert statement
+      $sql = "INSERT INTO hook_data (raw_data, decrypted_data) VALUES (?, ?)";
        
-        </div>
-    </div>
-</body>
+      if($stmt = mysqli_prepare($link, $sql)){
+          // Bind variables to the prepared statement as parameters
+          mysqli_stmt_bind_param($stmt, "ss", $raw_data, $decrypted_data);
+          
+          // Set parameters
+          $raw_data = $raw_data;
+          $decrypted_data = $decrypted_data;
+          
+          // Attempt to execute the prepared statement
+          if(mysqli_stmt_execute($stmt)){
+              // Records created successfully. Redirect to landing page
+              echo "Records created successfully.";
+              exit();
+          } else{
+              echo "Oops! Something went wrong. Please try again later.";
+          }
+        }
+    }
+  }else{
+    echo "No data Available";
+}
 
-</html>
- 
+?>
