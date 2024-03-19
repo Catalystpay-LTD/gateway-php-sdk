@@ -64,7 +64,7 @@ if(empty( $_SESSION["serverData"])){
                     // Payment with card
                     $formData = [
                         'checkoutId' => $responseData->getId(),
-                        'shopperResultUrl' => 'http://localhost/catalystpay/registration_token_payment.php',
+                        'shopperResultUrl' => 'registration_token_payment.php',
                         'dataBrands' => [
                             CatalystPaySDK::PAYMENT_BRAND_VISA,
                             CatalystPaySDK::PAYMENT_BRAND_MASTERCARD,

@@ -101,6 +101,16 @@ if(empty( $_SESSION["serverData"])){
                         ];
                         echo $CatalystPaySDK->createPaymentForm($formData4);
                     }
+                     // Payment with rocket fuel
+                     if (isset($_POST['pay_by']) && $_POST['pay_by'] == "applepay") {
+                        $formData4 = [
+                            'checkoutId' => $responseData->getId(),
+                            'shopperResultUrl' => 'http://localhost/catalystpay/copy_and_pay_result.php',
+                            'dataBrands' => [CatalystPaySDK::PAYMENT_BRAND_APPLE_PAY],
+                            'wpwlOptions' => $wpwlOptions
+                        ];
+                        echo $CatalystPaySDK->createPaymentForm($formData4);
+                    }
                 } else {
                     $errorMessage = "The Prepare Checkout was not successful";
                 }
@@ -179,6 +189,9 @@ if(empty( $_SESSION["serverData"])){
 
                                 <label class="form-check-label">
                                     <input type="radio" class="form-check-input" name="pay_by" value="rocketfuel"> &nbsp;Rocket Fuel
+                                </label>
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="pay_by" value="applepay"> &nbsp;Apple Pay
                                 </label>
                             </div>
                         </div>

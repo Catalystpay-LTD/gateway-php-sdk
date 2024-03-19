@@ -78,7 +78,6 @@ try {
 </head>
 
 <body>
-    <?php include_once('header.php');?>
     <div class="vh-100 d-flex justify-content-center align-items-center">
         <div>
             <?php
@@ -99,7 +98,7 @@ try {
                     <p>
                         <b>Transaction Id:</b><span><?php echo $responseData->getId() ?? ''; ?></span><br>
                     </p>
-                    <button class="btn btn-primary">Back Home</button>
+                    <a href="/registration_token.php" class="btn btn-primary">Back Home</a>
                 </div>
             <?php
             }
