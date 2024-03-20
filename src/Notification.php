@@ -18,18 +18,20 @@ class Notification
      * Store the incoming notification as an data
      *
      */
-    private $notificationData;
-
+    private $notificationBody ,$iv, $authTag;
+    private $key_from_configuration = "000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f";
     /**
-     * Initialize the object with notification data
+     * Initialize the object with notification body
      *
-     * @param $data
+     * @param $body
      *
      */
-    public function __construct($data = null)
+    public function __construct($body,$iv,$authTag)
     {
-        if (!is_null($data)) {
-            $this->notificationData= $data;
+        if (!is_null($body)) {
+            $this->notificationBody= $body;
+            $this->iv= $iv;
+            $this->authTag= $authTag;
         }
     }
 
@@ -41,12 +43,10 @@ class Notification
      */
     public function getDecryptedMessage()
     {
-        $key_from_configuration = "000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f";
-        $iv_from_http_header = "000000000000000000000000";
-        $auth_tag_from_http_header = "CE573FB7A41AB78E743180DC83FF09BD";
-        // $http_body = "0A3471C72D9BE49A8520F79C66BBD9A12FF9";
-        $http_body = $this->notificationData;
-        $key = hex2bin($key_from_configuration);
+        $iv_from_http_header =  $this->iv;
+        $auth_tag_from_http_header =   $this->authTag;
+        $http_body = $this->notificationBody;
+        $key = hex2bin($this->$key_from_configuration);
         $iv = hex2bin($iv_from_http_header);
         $auth_tag = hex2bin($auth_tag_from_http_header);
         $cipher_text = hex2bin($http_body);
