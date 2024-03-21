@@ -477,21 +477,23 @@ When using an Asynchronous workflow, you need to parse the incoming extension in
 Example:
 
 ```php
-
+require_once "config.php";
 require_once 'vendor/autoload.php';
-
 use CatalystPay\Notification;
-// Example usage
-try {
-    $http_body =$_POST;
-    //    print_r($http_body);
-   // Configured  CatalystPaySDK
-   //$http_body = "0A3471C72D9BE49A8520F79C66BBD9A12FF9";
-   $notification = new Notification($http_body);
 
-   //Get decrypted message from webhook
-   echo $responseData = $notification->getDecryptedMessage($http_body);
-} catch (Exception $e) {
-    echo $errorMessage = $e->getMessage();
-}
+ // Check webhook configuration like auth tag , iv etc 
+  if(!empty($_SERVER)){
+    $keyFromConfiguration="4FBB6197CD8D21651452D444B1AB5B3C2204F1308E1E1B45E0B6BEF50E64ABC9";
+    $authTag = $_SERVER['HTTP_X_AUTHENTICATION_TAG'];
+    $iv = $_SERVER['HTTP_X_INITIALIZATION_VECTOR'];
+  }
+
+  // Check webhook body
+  if(!empty(file_get_contents("php://input"))) {
+    $httpBody = file_get_contents("php://input");
+    $notification = new Notification($keyFromConfiguration,$httpBody,$iv,$authTag);
+  
+    //Get decrypted message from webhook  
+   echo  $decrypted_data = $notification->getDecryptedMessage();
+  }   
 ```
