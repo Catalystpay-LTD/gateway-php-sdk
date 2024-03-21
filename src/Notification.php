@@ -18,17 +18,18 @@ class Notification
      * Store the incoming notification as an data
      *
      */
-    private $notificationBody ,$iv, $authTag;
-    private $key_from_configuration = "000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f";
+    private $notificationBody ,$iv, $authTag,$keyFromConfiguration;
+    
     /**
      * Initialize the object with notification body
      *
      * @param $body
      *
      */
-    public function __construct($body,$iv,$authTag)
+    public function __construct($keyFromConfiguration,$body,$iv,$authTag)
     {
         if (!is_null($body)) {
+            $this->keyFromConfiguration= $keyFromConfiguration;
             $this->notificationBody= $body;
             $this->iv= $iv;
             $this->authTag= $authTag;
@@ -46,7 +47,7 @@ class Notification
         $iv_from_http_header =  $this->iv;
         $auth_tag_from_http_header =   $this->authTag;
         $http_body = $this->notificationBody;
-        $key = hex2bin($this->$key_from_configuration);
+        $key = hex2bin($this->keyFromConfiguration);
         $iv = hex2bin($iv_from_http_header);
         $auth_tag = hex2bin($auth_tag_from_http_header);
         $cipher_text = hex2bin($http_body);
