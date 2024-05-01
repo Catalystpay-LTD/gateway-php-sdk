@@ -47,6 +47,7 @@ class CatalystPaySDK
     const URI_TRANSACTION_REPORTS = "/v3/query";
     const URI_SETTLEMENT_REPORTS = "/reports/v1/reconciliations/aggregations";
     const URI_SETTLEMENT_REPORTS_PAGINATION = "/reports/v2/reconciliations/aggregations";
+    const SCHEDULING_PAYMENTS = 'scheduling/v1/schedules';
     const DEVELOPMENT_URL = "https://eu-test.oppwa.com";
     const PRODUCTION_URL = "https://eu-prod.oppwa.com";
 
