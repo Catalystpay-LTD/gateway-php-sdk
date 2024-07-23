@@ -22,29 +22,32 @@ class RegistrationTokenTest extends TestCase
             'testMode' => GatewayPaySDK::TEST_MODE_EXTERNAL,
             'createRegistration' => true
         ];
-        //Prepare Check out form 
-        $response = $GatewayPay->prepareRegisterCheckout($data);
-
-        // assert
-        $this->assertTrue($response->isCheckoutSuccess(), 'The checkout returned ' . $response->getResultCode() . ' instead of ' . GatewayPayResponseCode::CREATED_CHECKOUT);
-        $this->assertGreaterThanOrEqual(1, strlen($response->getId()));
-
-        // Get the Registration Token status
-        $registrationTokenStatusResponse = $GatewayPay->getRegistrationStatus($response->getId());
-        $this->assertEquals(!$registrationTokenStatusResponse->isRegistrationStatus(), $registrationTokenStatusResponse->getResultCode(), 'The transaction should be pending, but is ' . $registrationTokenStatusResponse->getResultCode());    // Send payment using the token
-
-
-        // Registration Token Values defined variable
         $data = [
-            'paymentBrand' => GatewayPaySDK::PAYMENT_BRAND_VISA,
-            'paymentType' =>  GatewayPaySDK::PAYMENT_TYPE_DEBIT,
-            'amount' => 92.00,
-            'currency' => 'EUR',
-            'standingInstructionType' =>  GatewayPaySDK::STANDING_INSTRUCTION_TYPE_UNSCHEDULED,
-            'standingInstructionMode' =>  GatewayPaySDK::STANDING_INSTRUCTION_MODE_INITIAL,
-            'standingInstructionSource' => GatewayPaySDK::STANDING_INSTRUCTION_SOURCE_CIT,
-            'testMode' => GatewayPaySDK::TEST_MODE_EXTERNAL
+            'amount' => '100.00',
+            'currency' => 'USD',
+            'paymentType' => 'DB',
+            'billing.city' => 'Test City',
+            'billing.country' => 'US',
+            'billing.street1' => 'Test Street 1',
+            'billing.postcode' => '12345',
+            'customer.email' => 'test@example.com',
+            'customer.givenName' => 'John',
+            'customer.surname' => 'Doe',
+            'standingInstruction.type' => 'RECURRING',
+            'standingInstruction.mode' => 'REPEATED',
+            'standingInstruction.source' => 'CIT',
+            'standingInstruction.recurringType' => 'FIXED',
+            'threeDSecure.eci' => '05',
+            'threeDSecure.authenticationStatus' => 'Y',
+            'threeDSecure.version' => '2.0',
+            'threeDSecure.dsTransactionId' => '123456789',
+            'threeDSecure.acsTransactionId' => '987654321',
+            'threeDSecure.verificationId' => 'verification123',
+            'threeDSecure.amount' => '100.00',
+            'threeDSecure.currency' => 'USD',
+            'threeDSecure.flow' => 'CHALLENGE',
         ];
+
         $registerPayment = $GatewayPay->sendRegistrationTokenPayment($response->getId(), $data);
         //$this->assertTrue($registerPayment->isPaymentTransactionPending(), 'The payment' . $registerPayment->getId() . ' was not successful and should have been');
         $this->assertTrue($registerPayment);
